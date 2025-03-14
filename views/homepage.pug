@@ -1,0 +1,25 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title= title
+    link(rel="stylesheet", href="/css/style.css")
+  body
+    h1 Video Game Characters
+    a(href="/update-cobj" class="add-update-link") Add to this table
+    table
+      thead
+        tr
+          th Character Name
+          th Game Series
+          th Release Year
+          th Actions
+      tbody
+        each character in characters
+          tr
+            td= character.properties.name
+            td= character.properties.series
+            td= character.properties.year
+            td
+              a(href=`/update-cobj?id=${character.id}`) Edit

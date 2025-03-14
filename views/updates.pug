@@ -1,0 +1,25 @@
+doctype html
+html
+  head
+    title= pageTitle
+    link(rel="stylesheet", href="/css/style.css")
+  body.form-page
+    div.content
+      h1= character ? 'Edit Video Game Character' : 'Add New Video Game Character'
+      div.form-container
+        form(action="/update-cobj" method="post")
+          if character
+            input(type="hidden" name="id" value=character.id)
+          
+          label(for="name") Character Name
+          input(type="text" name="name" value=character ? character.properties.name : '' required)
+          
+          label(for="series") Game Series
+          input(type="text" name="series" value=character ? character.properties.series : '' required)
+          
+          label(for="year") Release Year
+          input(type="text" name="year" value=character ? character.properties.year : '' required)
+          
+          button(type="submit")= character ? 'Update Character' : 'Add Character'
+        
+        a(href="/") Return to the homepage

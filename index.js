@@ -16,34 +16,62 @@ console.log(PRIVATE_APP_ACCESS);
 
 // * Code for Route 1 goes here
 // ROUTE 1 - Homepage route to display all video game characters
+// ROUTE 1 - Homepage route to display all video game characters
 app.get('/', async (req, res) => {
-    // Fetch video game characters from HubSpot API
-    // Use the custom object endpoint for video game characters
-    // Include properties needed for display: name, series, year
-    // endpoint: https://api.hubspot.com/crm/v3/objects/p_video_game_characters?properties=name,series,year
+    const charactersEndpoint = 'https://api.hubspot.com/crm/v3/objects/p_video_game_characters?properties=name,series,year';
+    const headers = {
+      Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+      'Content-Type': 'application/json'
+    };
+    
+    try {
+      const response = await axios.get(charactersEndpoint, { headers });
+      const characters = response.data.results;
+      res.render('homepage', { 
+        title: 'Video Game Characters | HubSpot Integration', 
+        characters: characters 
+      });
+    } catch (error) {
+      console.error('Error fetching characters:', error);
+      res.status(500).send('Error fetching characters data');
+    }
   });
 
 
 // TODO: ROUTE 2 - Create a new app.get route for the form to create or update new custom object data. Send this data along in the next route.
 
 // * Code for Route 2 goes here
-// ROUTE 2 - Form route for adding/editing video game characters
+// ROUTE 2 - Form route for adding or editing video game characters
 app.get('/update-cobj', async (req, res) => {
-    // Set page title for the form
-    
-    // Check if there's an ID parameter in the request
-    // If ID exists, we're editing an existing character
-    
-    // For editing:
-    // - Fetch the character details using the ID
-    // - Set up the API endpoint with character ID
-    // - Make the API request to get character data
-    // - Render form with existing character data
-    
-    // For creating:
-    // - Simply render empty form
-    
-    // Handle any potential errors
+    try {
+      const pageTitle = 'Update Custom Object Form | Integrating With HubSpot I Practicum';
+      
+      // Check if we're editing an existing character
+      if (req.query.id) {
+        const characterId = req.query.id;
+        const characterEndpoint = `https://api.hubspot.com/crm/v3/objects/p_video_game_characters/${characterId}?properties=name,series,year`;
+        const headers = {
+          Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+          'Content-Type': 'application/json'
+        };
+        
+        const response = await axios.get(characterEndpoint, { headers });
+        const character = response.data;
+        
+        res.render('updates', { 
+          pageTitle,
+          character
+        });
+      } else {
+        // If no ID, we're creating a new character
+        res.render('updates', { 
+          pageTitle
+        });
+      }
+    } catch (error) {
+      console.error('Error rendering form:', error);
+      res.status(500).send('Error rendering form');
+    }
   });
 
 // TODO: ROUTE 3 - Create a new app.post route for the custom objects form to create or update your custom object data. Once executed, redirect the user to the homepage.

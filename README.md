@@ -41,6 +41,7 @@ To use this application:
 - Using [Node](https://nodejs.org/en/download) and node packages
 - Using [Express](https://expressjs.com/en/starter/installing.html)
 - Using [Axios](https://axios-http.com/docs/intro)
+- Using [Dotenv](https://www.npmjs.com/package/dotenv)
 - Using [Pug templating system](https://pugjs.org/api/getting-started.html)
 - Using the command line
 - Using [Git and GitHub](https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners)

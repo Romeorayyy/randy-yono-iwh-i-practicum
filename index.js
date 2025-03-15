@@ -16,7 +16,6 @@ console.log(PRIVATE_APP_ACCESS);
 
 // * Code for Route 1 goes here
 // ROUTE 1 - Homepage route to display all video game characters
-// ROUTE 1 - Homepage route to display all video game characters
 app.get('/', async (req, res) => {
     const charactersEndpoint = 'https://api.hubspot.com/crm/v3/objects/p_video_game_characters?properties=name,series,year';
     const headers = {

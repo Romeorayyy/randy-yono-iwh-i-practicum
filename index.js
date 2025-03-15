@@ -77,28 +77,42 @@ app.get('/update-cobj', async (req, res) => {
 // TODO: ROUTE 3 - Create a new app.post route for the custom objects form to create or update your custom object data. Once executed, redirect the user to the homepage.
 
 // * Code for Route 3 goes here
-// ROUTE 3 - POST route for submitting character data
+// ROUTE 3 - POST route for submitting new or updated video game character data
 app.post('/update-cobj', async (req, res) => {
-  // Set up headers for API request
-  
-  // Create data object with form values
-  // Properties: name, series, year
-  
-  // Check if we're updating or creating:
-  // - If ID exists in the form data, we're updating
-  
-  // For updating:
-  // - Use PATCH request to update existing character
-  // - Include character ID in the endpoint
-  
-  // For creating:
-  // - Use POST request to create new character
-  
-  // Redirect to homepage after successful operation
-  
-  // Handle any errors during the API request
+    const headers = {
+      Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+      'Content-Type': 'application/json'
+    };
+    
+    const data = {
+      properties: {
+        name: req.body.name,
+        series: req.body.series,
+        year: req.body.year
+      }
+    };
+    
+    try {
+      if (req.body.id) {
+        // Update existing character
+        const characterId = req.body.id;
+        const updateEndpoint = `https://api.hubspot.com/crm/v3/objects/p_video_game_characters/${characterId}`;
+        await axios.patch(updateEndpoint, data, { headers });
+      } else {
+        // Create new character
+        const createEndpoint = 'https://api.hubspot.com/crm/v3/objects/p_video_game_characters';
+        await axios.post(createEndpoint, data, { headers });
+      }
+      
+      res.redirect('/'); // Redirect to homepage after successful creation or update
+    } catch (error) {
+      console.error('Error saving character data:', error);
+      res.status(500).send('Error saving character data');
+    }
 });
 
+// * Localhost
+app.listen(3000, () => console.log('Listening on http://localhost:3000'));
 
 /** 
 * * This is sample code to give you a reference for how you should structure your calls. 
@@ -146,4 +160,4 @@ app.post('/update', async (req, res) => {
 
 
 // * Localhost
-app.listen(3000, () => console.log('Listening on http://localhost:3000'));
+// app.listen(3000, () => console.log('Listening on http://localhost:3000'));

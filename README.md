@@ -6,6 +6,16 @@ To read the full directions, please go to the [practicum instructions](https://a
 
 **Put your HubSpot developer test account custom objects URL link here:** https://app.hubspot.com/contacts/49526134/objects/2-41869972/views/all/list
 
+![Homepage showing video game characters table](https://i.ibb.co/mFVnd2CN/f2e23500c467.png)
+*Figure 1: Homepage displaying video game characters in a table format with edit actions*
+
+
+![Edit form for video game characters](https://i.ibb.co/rNbzXYr/354934829010.png)
+*Figure 2: Form for adding new video game characters or editing existing ones*
+
+
+---
+
 ## Environment Setup
 
 To use this application:
@@ -17,8 +27,6 @@ To use this application:
 
 - Your `.env` file should look like this: `HUBSPOT_PRIVATE_APP_ACCESS=your_actual_token_here`
 - This keeps your API credentials secure and out of version control.
-
----
 
 ## Tips:
 
